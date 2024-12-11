@@ -1,24 +1,39 @@
 package com.guilhermeonizio.backend_banco_inter.model;
 
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
+    @Column(nullable = false)
     private String nome;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(unique = true)
-    private String cpf;
-
+    @Column(nullable = false)
     private String senha;
 
+    @Column(nullable = false, unique = true)
+    private String cpf;
+
+    @Column(nullable = false)
+    private double saldo; // Adicionado atributo saldo
+
+    @Column(nullable = false)
+    private LocalDateTime dataCriacao;
+
+    // Construtores
+    public User() {
+        this.dataCriacao = LocalDateTime.now();
+    }
+
+    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -43,6 +58,14 @@ public class User {
         this.email = email;
     }
 
+    public String getSenha() {
+        return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
     public String getCpf() {
         return cpf;
     }
@@ -51,11 +74,19 @@ public class User {
         this.cpf = cpf;
     }
 
-    public String getSenha() {
-        return senha;
+    public double getSaldo() {
+        return saldo;
     }
 
-    public void setSenha(String senha) {
-        this.senha = senha;
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+    public LocalDateTime getDataCriacao() {
+        return dataCriacao;
+    }
+
+    public void setDataCriacao(LocalDateTime dataCriacao) {
+        this.dataCriacao = dataCriacao;
     }
 }

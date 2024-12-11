@@ -31,4 +31,22 @@ public class UserService {
         // Retornando o usuário após salvar
         return userRepository.save(user);
     }
+
+    public User consultarSaldo(Long id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    }
+
+    @Transactional
+    public User adicionarSaldo(Long id, double valor) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+
+        if (valor <= 0) {
+            throw new RuntimeException("O valor deve ser maior que zero");
+        }
+
+        user.setSaldo(user.getSaldo() + valor);
+        return userRepository.save(user);
+    }
 }
